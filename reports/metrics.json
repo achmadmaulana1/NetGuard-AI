@@ -1,0 +1,61 @@
+{
+    "best_model": "Decision Tree",
+    "best_model_accuracy": 0.999247554552295,
+    "selection_rule": "F1-score, then Recall, then Accuracy",
+    "dataset_summary": {
+        "total_records": 19935,
+        "normal_records": 9935,
+        "anomaly_records": 10000,
+        "anomaly_ratio": 0.5016302984700276
+    },
+    "models": {
+        "Logistic Regression": {
+            "accuracy": 0.9919739152244795,
+            "precision": 0.9856860809476802,
+            "recall": 0.9985,
+            "f1_score": 0.9920516641828118,
+            "confusion_matrix": [
+                [
+                    1958,
+                    29
+                ],
+                [
+                    3,
+                    1997
+                ]
+            ]
+        },
+        "Decision Tree": {
+            "accuracy": 0.999247554552295,
+            "precision": 0.9994997498749375,
+            "recall": 0.999,
+            "f1_score": 0.9992498124531133,
+            "confusion_matrix": [
+                [
+                    1986,
+                    1
+                ],
+                [
+                    2,
+                    1998
+                ]
+            ]
+        },
+        "Random Forest": {
+            "accuracy": 0.999247554552295,
+            "precision": 1.0,
+            "recall": 0.9985,
+            "f1_score": 0.9992494370778083,
+            "confusion_matrix": [
+                [
+                    1987,
+                    0
+                ],
+                [
+                    3,
+                    1997
+                ]
+            ]
+        }
+    }
+}

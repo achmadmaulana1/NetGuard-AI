@@ -1,0 +1,12 @@
+{
+    "project_title": "NetGuard AI - Predictive Network Failure & Anomaly Monitoring",
+    "dataset": "CICIDS2017-style network traffic CSV",
+    "best_model": "Decision Tree",
+    "accuracy": 0.999247554552295,
+    "precision": 0.9994997498749375,
+    "recall": 0.999,
+    "f1_score": 0.9992498124531133,
+    "risk_score": 49.99,
+    "risk_level": "High",
+    "conclusion": "The trained model can classify new network traffic records into Normal or Anomaly classes. The current prediction batch has a High risk level with 49.99% anomaly ratio."
+}

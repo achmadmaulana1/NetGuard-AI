@@ -1,0 +1,59 @@
+# Ignore rules from previous project format
+Dataset/raw/
+Dataset/processed/
+Hasil_Eksperimen/model/
+GitHub/
+PPT_Presentasi/
+Bukti_Validitas/
+Video_Demo/
+Draft_Jurnal/
+Dokumentasi/
+*.pkl
+__pycache__/
+.ipynb_checkpoints/
+venv/
+.env
+~$*.docx
+~$*.pptx
+*.tmp
+
+# NetGuard AI actual project paths
+data/raw/
+data/processed/
+!data/processed/.gitkeep
+models/
+*.zip
+logs/
+*.log
+node_modules/
+.next/
+dist/
+build/
+.vercel/
+.turbo/
+
+# Local/editor files
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+
+# Other local UAS project folders not part of NetGuard Achmad
+Arlen_Prima_Dinova_241730003_UAS_AI/
+Arlen_Prima_Dinova_241730003_UAS_AI_FINAL.zip
+Putri_Dwi_Manggali_241730005_UAS_AI/
+Putri_Dwi_Manggali_241730005_UAS_AI_FINAL.zip
+tmp_chrome_arlen/
+tmp_chrome_putri/
+render_jurnal_adpl/
+arlen_chrome_shot.png
+build_business_pptx.mjs
+build_business_uas_artifacts.py
+
+# NetGuard final package heavy generated data/model files
+Achmad_Maulana_241730016_UAS_AI/04_Dataset/Raw_Dataset/
+Achmad_Maulana_241730016_UAS_AI/04_Dataset/Processed_Dataset/
+Achmad_Maulana_241730016_UAS_AI/06_Model/*.pkl
+
+# Office lock files
+~$*

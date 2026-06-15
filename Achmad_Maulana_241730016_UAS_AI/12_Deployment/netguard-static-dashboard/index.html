@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NetGuard AI Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="cursor-glow"></div>
+  <main>
+    <nav>
+      <strong>NetGuard AI</strong>
+      <div>
+        <a href="#metrics">Dashboard</a>
+        <a href="#try">Coba Deteksi</a>
+        <a href="#guide">Panduan</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">AI Network Anomaly Monitoring</p>
+        <h1>Predictive Network Failure & Anomaly Monitoring</h1>
+        <p class="lead">Pantau kondisi trafik jaringan, cek potensi anomali, dan baca saran tindakan dalam satu tampilan yang mudah dipahami.</p>
+        <div class="actions">
+          <a class="primary" href="#try">Coba Deteksi</a>
+          <a class="secondary" href="#metrics">Lihat Dashboard</a>
+        </div>
+      </div>
+      <div class="processing-card">
+        <div class="running-bar"></div>
+        <h2>Siap Memeriksa Trafik</h2>
+        <p>Best model: Decision Tree</p>
+        <strong>F1-score 0.9993</strong>
+      </div>
+    </section>
+
+    <section id="metrics" class="grid metrics">
+      <article><span>Total Records</span><strong>19,935</strong></article>
+      <article><span>Normal</span><strong>9,935</strong></article>
+      <article><span>Anomaly</span><strong>10,000</strong></article>
+      <article><span>Risk Level</span><strong>High</strong></article>
+    </section>
+
+    <section class="charts">
+      <div class="panel">
+        <h2>Model Comparison</h2>
+        <canvas id="comparisonChart"></canvas>
+      </div>
+      <div class="panel risk">
+        <h2>Saran Tindakan</h2>
+        <p class="risk-score">49.99%</p>
+        <p>Prioritize incident investigation, isolate suspicious hosts, and verify critical services.</p>
+      </div>
+    </section>
+
+    <section id="try" class="panel detector">
+      <div>
+        <p class="eyebrow">Coba Deteksi</p>
+        <h2>Periksa file trafik jaringan</h2>
+        <p>Pilih file CSV trafik jaringan. Pada demo ini, tombol akan menampilkan ringkasan pemeriksaan berdasarkan hasil model yang sudah dilatih.</p>
+      </div>
+      <label for="trafficFile">File CSV</label>
+      <input id="trafficFile" type="file" accept=".csv">
+      <button id="detectButton">Jalankan Deteksi</button>
+      <div id="detectResult" class="detect-result">Belum ada file yang dipilih.</div>
+    </section>
+
+    <section id="guide" class="method">
+      <h2>Panduan Penggunaan</h2>
+      <div class="flow">
+        <span>1. Pilih CSV</span>
+        <span>2. Jalankan deteksi</span>
+        <span>3. Baca risk score</span>
+        <span>4. Cek saran tindakan</span>
+        <span>5. Simpan bukti hasil</span>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "name": "netguard-ai-platform",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "framer-motion": "latest",
+    "three": "latest",
+    "@react-three/fiber": "latest",
+    "tailwindcss": "latest",
+    "lucide-react": "latest",
+    "@prisma/client": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "prisma": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "postcss": "latest",
+    "autoprefixer": "latest"
+  }
+}
