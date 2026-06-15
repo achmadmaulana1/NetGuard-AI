@@ -16,17 +16,26 @@ venv/
 ~$*.docx
 ~$*.pptx
 *.tmp
+*.pdf
+*.docx
+*.pptx
+*.xlsx
+*.xls
+*.csv
 
 # NetGuard AI actual project paths
 data/raw/
 data/processed/
 !data/processed/.gitkeep
+data/sample/
+data/*.txt
 models/
 *.zip
 logs/
 *.log
 node_modules/
 .next/
+package-lock.json
 dist/
 build/
 .vercel/
@@ -54,6 +63,22 @@ build_business_uas_artifacts.py
 Achmad_Maulana_241730016_UAS_AI/04_Dataset/Raw_Dataset/
 Achmad_Maulana_241730016_UAS_AI/04_Dataset/Processed_Dataset/
 Achmad_Maulana_241730016_UAS_AI/06_Model/*.pkl
+Achmad_Maulana_241730016_UAS_AI/01_Paper/*.pdf
+Achmad_Maulana_241730016_UAS_AI/**/*.pdf
+Achmad_Maulana_241730016_UAS_AI/**/*.docx
+Achmad_Maulana_241730016_UAS_AI/**/*.pptx
+Achmad_Maulana_241730016_UAS_AI/**/*.xlsx
+Achmad_Maulana_241730016_UAS_AI/**/*.csv
+Achmad_Maulana_241730016_UAS_AI/06_Model/*.json
+Achmad_Maulana_241730016_UAS_AI/07_Hasil_Eksperimen/*.json
+Achmad_Maulana_241730016_UAS_AI/08_Visualisasi/*.png
+reports/**/*.pdf
+reports/**/*.docx
+reports/**/*.pptx
+reports/**/*.xlsx
+reports/**/*.csv
+reports/**/*.json
+reports/**/*.png
 
 # Office lock files
 ~$*
