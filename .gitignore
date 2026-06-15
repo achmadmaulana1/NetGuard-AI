@@ -48,16 +48,12 @@ Thumbs.db
 Desktop.ini
 
 # Other local UAS project folders not part of NetGuard Achmad
-Arlen_Prima_Dinova_241730003_UAS_AI/
-Arlen_Prima_Dinova_241730003_UAS_AI_FINAL.zip
-Putri_Dwi_Manggali_241730005_UAS_AI/
-Putri_Dwi_Manggali_241730005_UAS_AI_FINAL.zip
-tmp_chrome_arlen/
-tmp_chrome_putri/
-render_jurnal_adpl/
-arlen_chrome_shot.png
-build_business_pptx.mjs
-build_business_uas_artifacts.py
+*_UAS_AI/
+*_UAS_AI_FINAL.zip
+
+tmp_chrome_*/
+
+*_chrome_shot.png
 
 # NetGuard final package heavy generated data/model files
 Achmad_Maulana_241730016_UAS_AI/04_Dataset/Raw_Dataset/
