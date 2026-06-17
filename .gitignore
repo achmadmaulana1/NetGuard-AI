@@ -10,6 +10,7 @@ Draft_Jurnal/
 Dokumentasi/
 *.pkl
 __pycache__/
+*.pyc
 .ipynb_checkpoints/
 venv/
 .env
@@ -29,6 +30,7 @@ data/processed/
 !data/processed/.gitkeep
 data/sample/
 data/*.txt
+data/*.db
 models/
 *.zip
 logs/
@@ -78,3 +80,4 @@ reports/**/*.png
 
 # Office lock files
 ~$*
+/build_jurnal_adpl_netguard.py 

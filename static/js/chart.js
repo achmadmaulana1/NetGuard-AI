@@ -8,12 +8,12 @@ async function loadSummary() {
 
 function metricColor(metric) {
     const colors = {
-        accuracy: "#38bdf8",
-        precision: "#22c55e",
-        recall: "#facc15",
-        f1_score: "#fb7185"
+        accuracy: "#23d3ee",
+        precision: "#3ee38f",
+        recall: "#f8c34a",
+        f1_score: "#ff5f7e"
     };
-    return colors[metric] || "#91a1bd";
+    return colors[metric] || "#9aa7b8";
 }
 
 function renderModelComparison(rows) {
@@ -41,17 +41,17 @@ function renderModelComparison(rows) {
                 y: {
                     beginAtZero: true,
                     max: 1,
-                    ticks: { color: "#91a1bd" },
-                    grid: { color: "#26344f" }
+                    ticks: { color: "#9aa7b8" },
+                    grid: { color: "rgba(255,255,255,0.1)" }
                 },
                 x: {
-                    ticks: { color: "#91a1bd" },
-                    grid: { color: "#26344f" }
+                    ticks: { color: "#9aa7b8" },
+                    grid: { color: "rgba(255,255,255,0.08)" }
                 }
             },
             plugins: {
                 legend: {
-                    labels: { color: "#eef4ff" }
+                    labels: { color: "#f5f7fb" }
                 }
             }
         }
@@ -80,7 +80,7 @@ function renderConfusionMatrix(matrix) {
             datasets: [{
                 label: "Confusion Matrix Count",
                 data: values,
-                backgroundColor: ["#22c55e", "#facc15", "#fb7185", "#38bdf8"]
+                backgroundColor: ["#3ee38f", "#f8c34a", "#ff5f7e", "#23d3ee"]
             }]
         },
         options: {
@@ -88,17 +88,17 @@ function renderConfusionMatrix(matrix) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: { color: "#91a1bd", precision: 0 },
-                    grid: { color: "#26344f" }
+                    ticks: { color: "#9aa7b8", precision: 0 },
+                    grid: { color: "rgba(255,255,255,0.1)" }
                 },
                 x: {
-                    ticks: { color: "#91a1bd" },
-                    grid: { color: "#26344f" }
+                    ticks: { color: "#9aa7b8" },
+                    grid: { color: "rgba(255,255,255,0.08)" }
                 }
             },
             plugins: {
                 legend: {
-                    labels: { color: "#eef4ff" }
+                    labels: { color: "#f5f7fb" }
                 }
             }
         }

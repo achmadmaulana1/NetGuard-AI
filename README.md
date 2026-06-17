@@ -1,6 +1,6 @@
 # NetGuard AI
 
-NetGuard AI is a low-budget student research project for predictive network failure and anomaly monitoring. The first version focuses on CICIDS2017-style CSV traffic data, trains machine learning models, and shows the results in a simple Flask dashboard.
+NetGuard AI is a deploy-ready Flask platform for predictive network failure and anomaly monitoring. It focuses on CICIDS2017-style CSV traffic data, trains machine learning models, records operational events in SQLite, exposes JSON APIs, and presents results in a premium animated dashboard.
 
 The project is designed for normal student laptops. It does not require a paid API, GPU, cloud server, or expensive hardware.
 
@@ -12,6 +12,11 @@ Implemented:
 - Stage 2: model training and evaluation.
 - Stage 3: Flask dashboard.
 - Stage 4: prediction system and research report export.
+- Premium UI shell with page transitions, animated process states, theme switch, icons, and responsive layout.
+- SQLite audit database for upload, training, prediction, and deployment health.
+- API endpoints: `/api/summary`, `/api/events`, `/api/health`.
+- Railway/Render deployment files: `Procfile`, `runtime.txt`, `railway.json`.
+- GitHub Actions daily update workflow.
 - UAS AI package: research gap, novelty, research method, experiment design, IEEE draft, and Google Drive artifact structure.
 
 ## Folder Structure
@@ -38,7 +43,12 @@ NetGuard-AI/
 |   +-- css/
 |   +-- js/
 +-- templates/
++-- .github/
++   +-- workflows/
 +-- Achmad_Maulana_241730016_UAS_AI/
++-- Procfile
++-- runtime.txt
++-- railway.json
 +-- requirements.txt
 +-- README.md
 ```
@@ -113,6 +123,14 @@ http://127.0.0.1:5000
 ```
 
 If port 5000 is busy, the app automatically tries 5001 or 5002.
+
+## API Endpoints
+
+```text
+/api/summary  Current dashboard metrics, model comparison, risk, events, and health.
+/api/events   Latest SQLite audit events.
+/api/health   Compact deployment health state.
+```
 
 ## Stage 4: Predict New Data
 
@@ -203,3 +221,47 @@ python app\test.py
 python app\predict.py
 python app\main.py
 ```
+
+## Simple GitHub Upload Flow
+
+Remote repository:
+
+```text
+https://github.com/achmadmaulana1/NetGuard-AI
+```
+
+Daily manual update:
+
+```cmd
+git status
+git add .
+git commit -m "update netguard platform"
+git push origin main
+```
+
+Automatic daily update is prepared in:
+
+```text
+.github/workflows/daily-keepalive.yml
+```
+
+After this workflow exists on GitHub, it updates `logs/daily_keepalive.txt` once per day using GitHub Actions.
+
+## Deploy
+
+Railway:
+
+```cmd
+railway login
+railway link
+railway up
+```
+
+Render:
+
+```text
+Build command: pip install -r requirements.txt
+Start command: gunicorn app.main:app
+```
+
+The app reads the platform `PORT` environment variable automatically.

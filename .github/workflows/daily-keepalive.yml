@@ -1,0 +1,26 @@
+name: Daily Repository Update
+
+on:
+  schedule:
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update daily log
+        run: |
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > .github/daily_keepalive.txt
+
+      - name: Commit daily update
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: daily repository update"
+          file_pattern: .github/daily_keepalive.txt

@@ -9,6 +9,7 @@ If your Windows "python" command points to Python 2, use:
 """
 
 import json
+import os
 import socket
 import sys
 if sys.version_info < (3, 8):
@@ -23,8 +24,14 @@ import pandas as pd
 from flask import Flask, flash, jsonify, redirect, render_template, request, url_for
 from werkzeug.utils import secure_filename
 
-from predictor import RESEARCH_SUMMARY_OUTPUT, run_prediction
-from train import train_models
+try:
+    from app.database import get_health, init_db, list_events, log_event, update_health
+    from app.predictor import RESEARCH_SUMMARY_OUTPUT, run_prediction
+    from app.train import train_models
+except ModuleNotFoundError:
+    from database import get_health, init_db, list_events, log_event, update_health
+    from predictor import RESEARCH_SUMMARY_OUTPUT, run_prediction
+    from train import train_models
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -49,6 +56,7 @@ def ensure_project_folders():
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     (REPORTS_DIR / "figures").mkdir(parents=True, exist_ok=True)
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
+    init_db()
 
 
 def load_json(path):
@@ -163,6 +171,9 @@ def dashboard_context():
     best_model_metrics = metrics.get("models", {}).get(best_model, {})
     confusion_matrix = best_model_metrics.get("confusion_matrix", [[0, 0], [0, 0]])
 
+    status = "ready" if has_training else "waiting_for_training"
+    update_health(status, best_model if has_training else "-", risk["risk_level"], risk["risk_score"])
+
     return {
         "has_training": has_training,
         "friendly_message": "" if has_training else "Belum ada hasil training.",
@@ -173,6 +184,8 @@ def dashboard_context():
         "comparison": comparison,
         "confusion_matrix": confusion_matrix,
         "latest_dataset": latest_processed_csv().name if latest_processed_csv() else "-",
+        "events": list_events(),
+        "health": get_health(),
     }
 
 
@@ -222,6 +235,7 @@ def upload():
         filename = secure_filename(uploaded_file.filename)
         save_path = UPLOAD_DIR / filename
         uploaded_file.save(save_path)
+        log_event("upload", "Dataset uploaded", filename)
         flash("Dataset berhasil diupload ke data/processed/{}.".format(filename), "success")
         return redirect(url_for("train_page"))
 
@@ -241,6 +255,7 @@ def train_page():
 
         try:
             train_models(str(dataset_path))
+            log_event("training", "Model training completed", dataset_path.name)
             flash("Training selesai. Dashboard sudah diperbarui.", "success")
             return redirect(url_for("dashboard"))
         except Exception as error:
@@ -286,6 +301,7 @@ def predict():
 
         try:
             prediction = run_prediction(input_path)
+            log_event("prediction", "Traffic prediction completed", Path(input_path).name)
             flash("Prediksi selesai. Hasil disimpan ke reports/prediction_result.csv.", "success")
         except Exception as error:
             flash(str(error), "danger")
@@ -306,8 +322,21 @@ def api_summary():
     return jsonify(dashboard_context())
 
 
+@app.route("/api/events")
+def api_events():
+    """Return latest operational events from SQLite."""
+    return jsonify({"events": list_events(20)})
+
+
+@app.route("/api/health")
+def api_health():
+    """Return compact deployment health state."""
+    return jsonify(get_health() or dashboard_context().get("health", {}))
+
+
 if __name__ == "__main__":
     ensure_project_folders()
-    selected_port = choose_available_port([5000, 5001, 5002])
-    print("NetGuard AI dashboard running at http://127.0.0.1:{}".format(selected_port))
-    app.run(host="127.0.0.1", port=selected_port, debug=True, use_reloader=False)
+    selected_port = int(os.environ.get("PORT") or choose_available_port([5000, 5001, 5002]))
+    host = "0.0.0.0" if os.environ.get("PORT") else "127.0.0.1"
+    print("NetGuard AI dashboard running at http://{}:{}".format(host, selected_port))
+    app.run(host=host, port=selected_port, debug=False, use_reloader=False)

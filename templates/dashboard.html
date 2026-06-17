@@ -1,149 +1,126 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NetGuard AI Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark dashboard-nav">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-semibold" href="{{ url_for('dashboard') }}">NetGuard AI</a>
-            <div class="d-flex gap-2">
-                <a class="btn btn-outline-light btn-sm" href="{{ url_for('upload') }}">Upload Dataset</a>
-                <a class="btn btn-outline-light btn-sm" href="{{ url_for('train_page') }}">Train Model</a>
-                <a class="btn btn-outline-light btn-sm" href="{{ url_for('predict') }}">Predict New Data</a>
-                <a class="btn btn-primary btn-sm" href="{{ url_for('report') }}">View Research Report</a>
+{% extends "base.html" %}
+
+{% set active_page = "dashboard" %}
+{% block title %}Dashboard - NetGuard AI{% endblock %}
+{% block eyebrow %}Live Network Operations{% endblock %}
+{% block heading %}Command dashboard{% endblock %}
+
+{% block content %}
+{% if not data.has_training %}
+    <div class="app-alert app-alert-warning">
+        <i data-lucide="triangle-alert"></i>
+        <span>{{ data.friendly_message }}</span>
+    </div>
+{% endif %}
+
+<section class="hero-grid">
+    <div class="hero-panel">
+        <div class="hero-copy">
+            <span class="kicker">CICIDS2017 Monitoring</span>
+            <h2>Traffic intelligence for fast security decisions.</h2>
+            <p>Dataset aktif: {{ data.latest_dataset }}</p>
+            <div class="hero-actions">
+                <a class="btn-premium" href="{{ url_for('predict') }}" data-transition-link>
+                    <i data-lucide="radar"></i><span>Predict Traffic</span>
+                </a>
+                <a class="btn-quiet" href="{{ url_for('train_page') }}" data-transition-link>
+                    <i data-lucide="cpu"></i><span>Train Model</span>
+                </a>
             </div>
         </div>
-    </nav>
+        <div class="signal-visual" aria-label="Network signal animation">
+            <span></span><span></span><span></span><span></span>
+            <div class="signal-core">{{ data.risk.risk_score }}%</div>
+        </div>
+    </div>
+    <div class="risk-tile risk-{{ data.risk.risk_level|lower }}">
+        <span>Risk Level</span>
+        <strong>{{ data.risk.risk_level }}</strong>
+        <small>{{ data.risk.recommended_action }}</small>
+    </div>
+</section>
 
-    <main class="container-fluid dashboard-shell">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} border-0">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+<section class="metric-strip">
+    <article class="metric-card">
+        <i data-lucide="database"></i>
+        <span>Total Records</span>
+        <strong>{{ data.summary.total_records }}</strong>
+    </article>
+    <article class="metric-card">
+        <i data-lucide="shield-check"></i>
+        <span>Normal Traffic</span>
+        <strong>{{ data.summary.normal_records }}</strong>
+    </article>
+    <article class="metric-card">
+        <i data-lucide="shield-alert"></i>
+        <span>Anomaly Traffic</span>
+        <strong>{{ data.summary.anomaly_records }}</strong>
+    </article>
+    <article class="metric-card">
+        <i data-lucide="badge-check"></i>
+        <span>Best Accuracy</span>
+        <strong>{{ "%.2f"|format(data.best_model_accuracy * 100) }}%</strong>
+    </article>
+</section>
 
-        {% if not data.has_training %}
-            <div class="alert alert-warning border-0">{{ data.friendly_message }}</div>
-        {% endif %}
-
-        <section class="dashboard-header">
+<section class="dashboard-grid">
+    <div class="panel panel-wide">
+        <div class="panel-title">
             <div>
-                <p class="text-uppercase text-info small fw-semibold mb-1">Network Traffic Monitor</p>
-                <h1>Network Monitoring Dashboard</h1>
-                <p class="text-secondary mb-0">Dataset aktif: {{ data.latest_dataset }}</p>
+                <h2>Model Comparison</h2>
+                <span>Accuracy, precision, recall, F1-score</span>
             </div>
-            <div class="risk-badge risk-{{ data.risk.risk_level|lower }}">
-                <span>{{ data.risk.risk_level }}</span>
-                <strong>{{ data.risk.risk_score }}%</strong>
+            <i data-lucide="bar-chart-3"></i>
+        </div>
+        <canvas id="modelComparisonChart"></canvas>
+    </div>
+    <div class="panel">
+        <div class="panel-title">
+            <div>
+                <h2>Confusion Matrix</h2>
+                <span>Best model: {{ data.best_model }}</span>
             </div>
-        </section>
+            <i data-lucide="grid-2x2"></i>
+        </div>
+        <canvas id="confusionMatrixChart"></canvas>
+    </div>
+    <div class="panel">
+        <div class="panel-title">
+            <div>
+                <h2>Risk Score</h2>
+                <span>Anomaly ratio</span>
+            </div>
+            <i data-lucide="gauge"></i>
+        </div>
+        <div class="risk-meter">
+            <div style="width: {{ data.risk.risk_score }}%;"></div>
+        </div>
+        <p class="result-text mt-3">{{ data.risk.risk_level }} risk with {{ data.risk.risk_score }}% anomaly ratio.</p>
+    </div>
+    <div class="panel">
+        <div class="panel-title">
+            <div>
+                <h2>Latest Events</h2>
+                <span>SQLite audit trail</span>
+            </div>
+            <i data-lucide="list-checks"></i>
+        </div>
+        <div class="event-list">
+            {% for event in data.events %}
+                <div class="event-item">
+                    <span>{{ event.event_type }}</span>
+                    <strong>{{ event.title }}</strong>
+                    <small>{{ event.created_at }}</small>
+                </div>
+            {% else %}
+                <p class="result-text mb-0">No events yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
 
-        <section class="panel usage-panel">
-            <div class="panel-title">
-                <h2>Cara Menggunakan</h2>
-                <span>Ikuti alur pemeriksaan trafik jaringan</span>
-            </div>
-            <div class="usage-steps">
-                <div>
-                    <strong>1</strong>
-                    <span>Upload CSV trafik jaringan</span>
-                </div>
-                <div>
-                    <strong>2</strong>
-                    <span>Train model jika data berubah</span>
-                </div>
-                <div>
-                    <strong>3</strong>
-                    <span>Predict data baru</span>
-                </div>
-                <div>
-                    <strong>4</strong>
-                    <span>Baca risk score dan saran tindakan</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="row g-3">
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="metric-card">
-                    <span>Total Records</span>
-                    <strong>{{ data.summary.total_records }}</strong>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="metric-card">
-                    <span>Normal Traffic</span>
-                    <strong>{{ data.summary.normal_records }}</strong>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="metric-card">
-                    <span>Anomaly Traffic</span>
-                    <strong>{{ data.summary.anomaly_records }}</strong>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-3">
-                <div class="metric-card">
-                    <span>Best Accuracy</span>
-                    <strong>{{ "%.2f"|format(data.best_model_accuracy * 100) }}%</strong>
-                </div>
-            </div>
-        </section>
-
-        <section class="row g-3 mt-1">
-            <div class="col-12 col-xl-8">
-                <div class="panel">
-                    <div class="panel-title">
-                        <h2>Model Comparison</h2>
-                        <span>Accuracy, Precision, Recall, F1-score</span>
-                    </div>
-                    <canvas id="modelComparisonChart"></canvas>
-                </div>
-            </div>
-            <div class="col-12 col-xl-4">
-                <div class="panel">
-                    <div class="panel-title">
-                        <h2>Confusion Matrix</h2>
-                        <span>Best model: {{ data.best_model }}</span>
-                    </div>
-                    <canvas id="confusionMatrixChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <section class="row g-3 mt-1">
-            <div class="col-12 col-lg-6">
-                <div class="panel">
-                    <div class="panel-title">
-                        <h2>Risk Score</h2>
-                        <span>Anomaly ratio based on current dataset</span>
-                    </div>
-                    <div class="risk-meter">
-                        <div style="width: {{ data.risk.risk_score }}%;"></div>
-                    </div>
-                    <p class="result-text mt-3">{{ data.risk.risk_level }} risk level with {{ data.risk.risk_score }}% anomaly ratio.</p>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="panel">
-                    <div class="panel-title">
-                        <h2>Recommended Action</h2>
-                        <span>Network administrator response</span>
-                    </div>
-                    <p class="result-text">{{ data.risk.recommended_action }}</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
-</body>
-</html>
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+{% endblock %}
