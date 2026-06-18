@@ -81,3 +81,7 @@ reports/**/*.png
 # Office lock files
 ~$*
 /build_jurnal_adpl_netguard.py 
+
+# Allow Achmad Maulana final package
+!Achmad_Maulana_241730016_UAS_AI/
+!Achmad_Maulana_241730016_UAS_AI/**

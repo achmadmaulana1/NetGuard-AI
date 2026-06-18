@@ -1,18 +1,1 @@
-# 09_Draft_IEEE
-
-Isi folder:
-
-- `Draft_Artikel_IEEE.docx`
-- `Draft_Artikel_IEEE.pdf`
-
-Sumber teks:
-
-- `reports/uas_ieee_draft.md`
-
-Ketentuan:
-
-- Gunakan template IEEE.
-- Minimal 6 halaman.
-- Maksimal 12 halaman.
-- Referensi minimal 20.
-- Sitasi IEEE Style.
+Folder ini berisi draft artikel IEEE Achmad Maulana dalam versi Bahasa Indonesia dan Bahasa Inggris. Kedua versi menggunakan struktur IEEE, narasi paragraf, sitasi bernomor, 22 referensi, tabel, gambar, DOCX, dan PDF pendamping.
