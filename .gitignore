@@ -1,87 +1,83 @@
-# Ignore rules from previous project format
-Dataset/raw/
-Dataset/processed/
-Hasil_Eksperimen/model/
-GitHub/
-PPT_Presentasi/
-Bukti_Validitas/
-Video_Demo/
-Draft_Jurnal/
-Dokumentasi/
-*.pkl
+﻿# NetGuard AI - source-code-only GitHub repository
+# Keep the repository focused on runnable application code.
+
+# Python caches and virtual environments
 __pycache__/
-*.pyc
-.ipynb_checkpoints/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 venv/
+.venv/
+env/
+ENV/
+
+# Secrets and local configuration
 .env
-~$*.docx
-~$*.pptx
-*.tmp
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+
+# Dataset, model, and generated ML artifacts
+data/raw/
+data/processed/
+data/sample/
+data/*.csv
+data/*.txt
+models/
+*.pkl
+*.joblib
+reports/
+logs/
+*.log
+
+# Research/UAS deliverables, documents, and archives
+Achmad_Maulana_241730016_UAS_AI/
+*_UAS_AI/
+*_UAS_AI_FINAL.zip
+*.zip
 *.pdf
 *.docx
 *.pptx
 *.xlsx
 *.xls
 *.csv
+~$*
+*.tmp
 
-# NetGuard AI actual project paths
-data/raw/
-data/processed/
-!data/processed/.gitkeep
-data/sample/
-data/*.txt
-data/*.db
-models/
-*.zip
-logs/
-*.log
+# Local generated helper scripts not needed for app deployment
+build_*.py
+build_*.mjs
+rebuild_*.py
+expand_*.py
+enhance_*.py
+clean_pptx_metadata.py
+make_svg_wrappers.py
+scripts/
+
+# Node / frontend build outputs if experiments are created locally
 node_modules/
-.next/
 package-lock.json
+.next/
 dist/
 build/
 .vercel/
 .turbo/
 
-# Local/editor files
+# Editor and OS files
 .vscode/
 .idea/
 Thumbs.db
 Desktop.ini
 
-# Other local UAS project folders not part of NetGuard Achmad
-*_UAS_AI/
-*_UAS_AI_FINAL.zip
-
-tmp_chrome_*/
-
+# Browser/test temporary folders
+tmp_chrome*/
 *_chrome_shot.png
 
-# NetGuard final package heavy generated data/model files
-Achmad_Maulana_241730016_UAS_AI/04_Dataset/Raw_Dataset/
-Achmad_Maulana_241730016_UAS_AI/04_Dataset/Processed_Dataset/
-Achmad_Maulana_241730016_UAS_AI/06_Model/*.pkl
-Achmad_Maulana_241730016_UAS_AI/01_Paper/*.pdf
-Achmad_Maulana_241730016_UAS_AI/**/*.pdf
-Achmad_Maulana_241730016_UAS_AI/**/*.docx
-Achmad_Maulana_241730016_UAS_AI/**/*.pptx
-Achmad_Maulana_241730016_UAS_AI/**/*.xlsx
-Achmad_Maulana_241730016_UAS_AI/**/*.csv
-Achmad_Maulana_241730016_UAS_AI/06_Model/*.json
-Achmad_Maulana_241730016_UAS_AI/07_Hasil_Eksperimen/*.json
-Achmad_Maulana_241730016_UAS_AI/08_Visualisasi/*.png
-reports/**/*.pdf
-reports/**/*.docx
-reports/**/*.pptx
-reports/**/*.xlsx
-reports/**/*.csv
-reports/**/*.json
-reports/**/*.png
-
-# Office lock files
-~$*
-/build_jurnal_adpl_netguard.py 
-
-# Allow Achmad Maulana final package
-!Achmad_Maulana_241730016_UAS_AI/
-!Achmad_Maulana_241730016_UAS_AI/**
+# GitHub automation experiments
+.github/
+rebuild_*.mjs
+data/

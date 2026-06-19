@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% set active_page = "report" %}
+{% block title %}Research Report - NetGuard AI{% endblock %}
+{% block eyebrow %}Research Export{% endblock %}
+{% block heading %}Deployment report{% endblock %}
+
+{% block content %}
+{% if not report %}
+    <div class="app-alert app-alert-warning">
+        <i data-lucide="triangle-alert"></i>
+        <span>Belum ada ringkasan penelitian. Jalankan prediksi terlebih dahulu.</span>
+    </div>
+{% else %}
+    <div class="panel">
+        <div class="panel-title">
+            <div>
+                <h2>Research Summary</h2>
+                <span>Export: reports\research_summary.json</span>
+            </div>
+            <i data-lucide="file-text"></i>
+        </div>
+        <div class="result-grid">
+            <div>
+                <span>Project Title</span>
+                <strong>{{ report.project_title }}</strong>
+            </div>
+            <div>
+                <span>Dataset</span>
+                <strong>{{ report.dataset }}</strong>
+            </div>
+            <div>
+                <span>Best Model</span>
+                <strong>{{ report.best_model }}</strong>
+            </div>
+            <div>
+                <span>Accuracy</span>
+                <strong>{{ "%.2f"|format(report.accuracy * 100) }}%</strong>
+            </div>
+            <div>
+                <span>Precision</span>
+                <strong>{{ "%.2f"|format(report.precision * 100) }}%</strong>
+            </div>
+            <div>
+                <span>Recall</span>
+                <strong>{{ "%.2f"|format(report.recall * 100) }}%</strong>
+            </div>
+            <div>
+                <span>F1-score</span>
+                <strong>{{ "%.2f"|format(report.f1_score * 100) }}%</strong>
+            </div>
+            <div>
+                <span>Risk Score</span>
+                <strong>{{ report.risk_score }}%</strong>
+            </div>
+        </div>
+        <p class="result-text mt-4">{{ report.conclusion }}</p>
+    </div>
+{% endif %}
+{% endblock %}

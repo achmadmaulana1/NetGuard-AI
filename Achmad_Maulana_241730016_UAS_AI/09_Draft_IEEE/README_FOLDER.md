@@ -1,1 +1,0 @@
-Folder ini berisi draft artikel IEEE Achmad Maulana dalam versi Bahasa Indonesia dan Bahasa Inggris. Kedua versi menggunakan struktur IEEE, narasi paragraf, sitasi bernomor, 22 referensi, tabel, gambar, DOCX, dan PDF pendamping.

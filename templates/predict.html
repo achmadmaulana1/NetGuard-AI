@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% set active_page = "predict" %}
+{% block title %}Predict - NetGuard AI{% endblock %}
+{% block eyebrow %}Traffic Inference{% endblock %}
+{% block heading %}Predict new traffic{% endblock %}
+
+{% block content %}
+<section class="panel mb-3">
+    <div class="panel-title">
+        <div>
+            <h2>Prediction Input</h2>
+            <span>Upload CSV or run the prepared sample</span>
+        </div>
+        <i data-lucide="radar"></i>
+    </div>
+    <form method="post" enctype="multipart/form-data" class="upload-form" data-process-form>
+        <label class="form-label" for="dataset">CSV file</label>
+        <input class="form-control" id="dataset" name="dataset" type="file" accept=".csv">
+        <div class="action-row mt-3">
+            <button class="btn-premium" type="submit" name="action" value="upload">
+                <i data-lucide="scan-line"></i><span>Predict Uploaded CSV</span>
+            </button>
+            <button class="btn-quiet" type="submit" name="action" value="sample">
+                <i data-lucide="flask-conical"></i><span>Use Sample CSV</span>
+            </button>
+        </div>
+    </form>
+</section>
+
+{% if prediction %}
+    <section class="metric-strip">
+        <article class="metric-card">
+            <i data-lucide="database"></i>
+            <span>Total Predicted</span>
+            <strong>{{ prediction.summary.total_records }}</strong>
+        </article>
+        <article class="metric-card">
+            <i data-lucide="shield-check"></i>
+            <span>Normal</span>
+            <strong>{{ prediction.summary.normal_records }}</strong>
+        </article>
+        <article class="metric-card">
+            <i data-lucide="shield-alert"></i>
+            <span>Anomaly</span>
+            <strong>{{ prediction.summary.anomaly_records }}</strong>
+        </article>
+        <article class="metric-card">
+            <i data-lucide="gauge"></i>
+            <span>Risk Score</span>
+            <strong>{{ prediction.summary.risk_score }}%</strong>
+        </article>
+    </section>
+
+    <div class="panel mt-3">
+        <div class="panel-title">
+            <div>
+                <h2>Prediction Summary</h2>
+                <span>{{ prediction.summary.risk_level }} risk level</span>
+            </div>
+            <i data-lucide="file-check-2"></i>
+        </div>
+        <p class="result-text">Anomaly ratio: {{ "%.2f"|format(prediction.summary.anomaly_ratio * 100) }}%</p>
+        <p class="result-text">{{ prediction.summary.recommended_action }}</p>
+        <p class="muted-path mb-0">Export saved to reports\prediction_result.csv</p>
+    </div>
+{% endif %}
+{% endblock %}

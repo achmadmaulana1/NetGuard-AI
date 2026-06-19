@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% set active_page = "result" %}
+{% block title %}Result - NetGuard AI{% endblock %}
+{% block eyebrow %}Decision Summary{% endblock %}
+{% block heading %}Latest monitoring result{% endblock %}
+
+{% block content %}
+{% if not data.has_training %}
+    <div class="app-alert app-alert-warning">
+        <i data-lucide="triangle-alert"></i>
+        <span>{{ data.friendly_message }}</span>
+    </div>
+{% endif %}
+
+<div class="panel">
+    <div class="panel-title">
+        <div>
+            <h2>Security Result</h2>
+            <span>Latest training report</span>
+        </div>
+        <i data-lucide="activity"></i>
+    </div>
+    <div class="result-grid">
+        <div>
+            <span>Best Model</span>
+            <strong>{{ data.best_model }}</strong>
+        </div>
+        <div>
+            <span>Risk Level</span>
+            <strong>{{ data.risk.risk_level }}</strong>
+        </div>
+        <div>
+            <span>Risk Score</span>
+            <strong>{{ data.risk.risk_score }}%</strong>
+        </div>
+        <div>
+            <span>Anomaly Traffic</span>
+            <strong>{{ data.summary.anomaly_records }}</strong>
+        </div>
+    </div>
+    <p class="result-text mt-4">{{ data.risk.recommended_action }}</p>
+</div>
+{% endblock %}

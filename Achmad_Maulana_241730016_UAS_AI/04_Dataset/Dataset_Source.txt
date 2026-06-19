@@ -1,7 +1,0 @@
-# Dataset Source
-Nama dataset: CICIDS2017 Friday-WorkingHours-Afternoon-DDos
-Sumber: Canadian Institute for Cybersecurity, University of New Brunswick
-Link: https://www.unb.ca/cic/datasets/ids-2017.html
-Tanggal akses: Juni 2026
-Processed records: 19935
-Kelas: 0 Normal, 1 Anomaly/DDoS
